@@ -14,6 +14,18 @@ export default {
         rubik: "var(--font-rubik), sans-serif",
       },
       colors: {
+        red:{
+        100:"#fce8ee",
+        200:"#fbdde5",
+        300:"#f6b8c9",
+        400:"#e31a50",
+        500:"#cc1748",
+        600:"#b61540",
+        700:"#aa143c",
+        800:"#881030",
+        900:"#660c24",
+        1000:"#4f091c"
+        },
         white: {
           100: "var(--color-white-100)",
           300: "var(--color-white-300)",
