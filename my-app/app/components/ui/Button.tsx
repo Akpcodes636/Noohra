@@ -25,12 +25,19 @@ interface ButtonProps {
     css,
   }) =>{
     return (
-        <button onClick={fn} type={type} className={`flex h-14 items-center justify-center rounded-[4px] bg-black-100 duration-150 font-semibold leading-[26px] text-[16px] transition-all ${css}${
-            style === "primary" &&"bg-black-100 text-[#FFF] "
+        <button onClick={fn} type={type} className={`flex h-14 items-center justify-center rounded-[4px] duration-150 font-semibold leading-[26px] text-[16px] transition-all  ${css}
+        ${
+            style === "primary" &&
+            "bg-[#000000] text-white"
         }${
-            style === "secondary" && "bg-[#2B1951] text-white"
+            style === "secondary" && 
+            "bg-[#000000] text-white"
         }${
-            style === "tertiary" && "border-[1px] border-[#CFCECD] text-white-100"}` }>
+            style === "tertiary" && 
+            "border-[1px] border-[#CFCECD] text-white-100"
+          }`
+        }
+          >
 
               {children}
         </button>

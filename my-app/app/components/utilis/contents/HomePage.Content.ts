@@ -26,8 +26,3 @@ export const NavLinks =[
  
 ]
 
-const roles = [
-    { id: 'learner', label: 'Learner' },
-    { id: 'parent', label: 'Parent' },
-    { id: 'therapist', label: 'Therapist' }
-  ];

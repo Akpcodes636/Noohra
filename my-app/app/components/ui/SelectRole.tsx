@@ -1,69 +1,57 @@
-
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Button from './Button';
-
-
+import Button from '../ui/Button';
+import { RoleContent } from '../utilis/contents/RegisterPage.Content';
 
 export default function RoleSelection() {
   const [selectedRole, setSelectedRole] = useState(null);
   const router = useRouter();
 
-interface Role {
-    id: string;
-    label: string;
-}
+  interface Role {
+    title: string;
+    description: string;
+  }
 
-const roles: Role[] = [
-    { id: 'learner', label: 'Learner' },
-    { id: 'parent', label: 'Parent' },
-    { id: 'therapist', label: 'Therapist' }
-];
+  // const handleRoleSelect = (roleId: number): void => {
+  //   setSelectedRole(roleId);
+  // };
 
-const handleRoleChange = (role: string) => {
-    setSelectedRole(role);
-};
-  
   const handleContinue = () => {
-    if (selectedRole) {
-      // You could either:
-      // 1. Redirect to a specific page for that role
-      router.push(`/register/${selectedRole}`);
-      
-      // Or 2. Store the role in localStorage/sessionStorage and stay on the same page
-      // localStorage.setItem('selectedRole', selectedRole);
-      // router.push('/register/details');
-    }
+    // if (selectedRole !== null) {
+    //   // Navigate to the next page, potentially with the role information
+    //   router.push(`/register/details?role=${selectedRole}`);
+    // }
+    router.push("/register/learner")
   };
-  
+
   return (
-    <div className="w-full h-full">
-      <h1 className="text-[32px] font-bold mb-[24px] text-[#0E1133] leading-[26px] ">Register as a</h1>
-      
-      <div className="">
-        {roles.map((role) => (
+    <div className="w-full h-full flex items-center flex-col justify-center">
+      <div className='min-w-[400px]'>
+        <h2 className='mb-[24px] text-[32px] leading-[26px] font-medium'>Register as a</h2>
+      </div>
+      <div className=''>
+        {RoleContent.map((role, index) => (
           <div 
-            key={role.id}
-            className={`rounded-lg cursor-pointer transition-colors ${
-              selectedRole === role.id ? 'border-[#2B4EFF] bg-blue-50' : 'border-gray-200'
-            }`}
-            onClick={() => handleRoleChange(role.id)}
+            key={index} 
+            className={`${
+              selectedRole === index 
+                ? 'bg-[#D3F2F0] border-2 border-[#14B8A6]' 
+                : 'bg-[#EAF8F7]'
+            } rounded-[8px] w-[405px] h-[101px] mb-[24px] py-[16px] px-[24px] cursor-pointer transition-colors`}
+            // onClick={() => handleRoleSelect(index)}
           >
-            <div className="flex items-center">
-              <div className={`w-5 h-5 rounded-full border ${
-                selectedRole === role.id ? 'border-[#2B4EFF] bg-[#2B4EFF]' : 'border-gray-300'
-              } mr-3`}></div>
-              <span className="font-medium">{role.label}</span>
-            </div>
+            <h1 className='font-semibold text-[20px] leading-[24px] mb-[12px]'>{role.title}</h1>
+            <p className='text-[12px] leading-[16px] text-[#535253]'>{role.description}</p>
           </div>
         ))}
       </div>
-      
-      <Button type="button" style='primary'
-        css="w-full py-3 bg-[#15544D] text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={!selectedRole}
+      <Button 
+        type="button" 
+        style={selectedRole !== null ? 'primary' : 'disabled'} 
+        css='w-[405px] h-[56px] rounded-[8px] bg-[#15544D] text-[#FFF]'
         fn={handleContinue}
+        // disabled={selectedRole === null}
       >
         Continue
       </Button>

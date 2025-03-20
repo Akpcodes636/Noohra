@@ -20,7 +20,7 @@ const Dropdown = ({ items = [] }: DropdownProps) => {
   const dropdownItems = items.length > 0 ? items : AboutDropdown;
   
   return (
-    <div className="shadow-xl bg-[#FFFF] flex items-center justify-center">
+    <div className="shadow-xl  bg-[#FFFF] flex items-center justify-center">
       <div className="w-[200px]">
         {dropdownItems.map((item, index) => (
           <Link 

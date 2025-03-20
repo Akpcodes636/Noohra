@@ -54,3 +54,16 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.label-class {
+  @apply text-base font-medium;
+}
+
+
+.input-class {
+  @apply h-12 w-full rounded-[5px] border border-[#CED4DA] px-6 py-7 text-[#000000E5] hover:border  focus:bg-[#E0F5F3] focus:outline-none duration-100;
+}
+
+.gradient {
+  background: linear-gradient(180deg, rgba(1, 26, 39, 0.28) 4.69%, rgba(1, 26, 39, 0.25) 56.25%, rgba(1, 26, 39, 0.37) 100%);
+}

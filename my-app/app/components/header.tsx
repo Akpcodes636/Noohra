@@ -40,7 +40,7 @@ export default function Header() {
   return (
     <header ref={headerRef} className="relative">
       <div className="w-full px-4 md:px-8 mx-auto">
-        <div className="flex items-center justify-between h-[97px]">
+        <div className="flex items-center justify-between h-[10vh]">
           <Logo />
           
           {/* Mobile menu button */}

@@ -8,7 +8,7 @@ export default function Home() {
    <>
     <Header/>
     <div className="relative">
-    <Ball className="absolute top-52 left-80" direction="left" />
+    <Ball className="absolute xl:top-[15%] 2xl:top-[20%] xl:right-[95%] 2xl:right-[80%]" direction="left" />
     <Hero />
     </div>
    </>
