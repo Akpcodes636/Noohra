@@ -5,30 +5,34 @@ import TestModal from "../components/ui/Modal";
 import Button from "../components/ui/Button";
 import Header from "../components/header";
 
-
-
 export default function Assesmentpage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showTestQuestions, setShowTestQuestions] = useState<boolean>(false);
-
-
+  const [email, setEmail] = useState("");
+  
   // opening modal
   const openLoginModal = () => {
     setIsModalOpen(true);
   };
-
+  
   // Closing modal
   const closeLoginModal = () => {
     setIsModalOpen(false);
   };
-
+  
   // Handle confirmation
   const handleConfirm = (selection: string) => {
     // Add your confirmation logic here
     console.log("Test selection confirmed");
+    console.log("User email:", email);
     closeLoginModal();
     setShowTestQuestions(true);
     // You could navigate to the next page or perform other actions
+  };
+  
+  // Handle email input change
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   return (
@@ -62,6 +66,22 @@ export default function Assesmentpage() {
                 insights that might help you understand your strengths and
                 challenges better. Ready to dive in and discover more about you?
               </p>
+              
+              {/* Email Input Field */}
+              <div className="mb-6 w-full max-w-[349px]">
+                <label htmlFor="email" className="block text-[#63605D] text-sm font-medium mb-2">
+                  Enter your email to get started
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  className="w-full px-4 py-3 border border-[#D0D5DD] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2D7B7E] focus:border-transparent"
+                  placeholder="example@email.com"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+              </div>
+              
               <div>
                 <Button
                   type="button"
@@ -83,7 +103,6 @@ export default function Assesmentpage() {
             </div>
           </div>
         )}
-
         {/* Use the TestModal component */}
         <TestModal
           isOpen={isModalOpen}

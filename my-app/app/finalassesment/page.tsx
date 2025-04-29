@@ -8,7 +8,7 @@ export default function AssesmentPage() {
   const router = useRouter(); // Initialize the router
 
   const handleClick = () => {
-    router.push("/adhdaassessment"); // Navigate to finalassessment page
+    router.push("/info"); // Navigate to finalassessment page
   };
 
   return (

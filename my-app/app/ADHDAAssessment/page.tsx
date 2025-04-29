@@ -4,38 +4,49 @@ import Image from "next/image";
 import AssessmentLayout from "../components/Layout/AssessmentLayout";
 import { adhdAssessmentQuestions } from "../components/utilis/data/mockAssessmentData";
 import useProgressStore from "../zustand/store";
+import ResultPage from "../result/page";
+// import ResultPage from "../components/ResultPage"; // 👈 We'll create this next
 
-  interface Answers {
-    [key: string]: string;
-  }
+interface Answers {
+  [key: string]: string;
+}
+
 export default function ADHDAssessment() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const { setProgress, progress } = useProgressStore();
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<Answers>({});
+  const [isCompleted, setIsCompleted] = useState(false);
 
-  // Get current question
   const currentQuestion = adhdAssessmentQuestions[currentQuestionIndex];
-  // Calculate progress percentage
-//   const progress =
-//     ((currentQuestionIndex + 1) / adhdAssessmentQuestions.length) * 100;
 
   const handleOptionClick = (optionValue: string): void => {
-    // Save the answer
-    setAnswers((prevAnswers: Answers) => ({
-      ...prevAnswers,
+    const newAnswers = {
+      ...answers,
       [currentQuestion.id]: optionValue,
-    }));
+    };
+    setAnswers(newAnswers);
 
-    // Move to next question if available
     if (currentQuestionIndex < adhdAssessmentQuestions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setProgress(progress + 1);
     } else {
-      // Handle assessment completion (you can redirect or show results)
-      console.log("Assessment completed", answers);
-      // TODO: Add completion logic
+      setIsCompleted(true);
     }
   };
+
+  const calculateScore = () => {
+    let score = 0;
+    adhdAssessmentQuestions.forEach((question) => {
+      if (answers[question.id] === question.correctAnswer) {
+        score++;
+      }
+    });
+    return score;
+  };
+
+  if (isCompleted) {
+    return <ResultPage score={calculateScore()} total={adhdAssessmentQuestions.length} />;
+  }
 
   return (
     <AssessmentLayout
@@ -46,7 +57,7 @@ export default function ADHDAssessment() {
       <div className="grid grid-cols-2 gap-4">
         {/* Left Section - Question and Image */}
         <div className="w-full">
-          <div className="mb-6 text-lg">{currentQuestion.questionText}</div>
+          <div className="mb-6 text-lg">{currentQuestion.question}</div>
           <div className="mt-4 w-[249px] h-[213px]">
             {currentQuestion.imageUrl && (
               <Image
