@@ -3,8 +3,6 @@ import GoBack from "../ui/Goback";
 import Logo from "../ui/Logo";
 
 export default function AssessmentHeader() {
-
-
   return (
     <header className="xl:h-[13vh] 2xl:h-[10vh] shadow-[0px_2px_4px_0px_#EFEFEF]">
       <div className="container mx-auto">
@@ -18,8 +16,6 @@ export default function AssessmentHeader() {
           <div></div>
         </div>
       </div>
-     
     </header>
   );
 }
-

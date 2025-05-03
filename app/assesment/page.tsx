@@ -47,7 +47,7 @@ export default function Assesmentpage() {
               <div className="flex items-center justify-center gap-3">
                 <div className="h-0 w-[35.5px]">
                   <Image
-                    src="/image/line.png"
+                    src="/image/Line.png"
                     alt="line through"
                     width={500}
                     height={500}
