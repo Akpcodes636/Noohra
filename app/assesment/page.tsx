@@ -23,6 +23,7 @@ export default function Assesmentpage() {
   // Handle confirmation
   const handleConfirm = (selection: string) => {
     // Add your confirmation logic here
+    console.log(selection)
     console.log("Test selection confirmed");
     console.log("User email:", email);
     closeLoginModal();

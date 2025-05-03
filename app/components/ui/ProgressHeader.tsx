@@ -1,5 +1,4 @@
 "use client";
-import { FC } from "react";
 import GoBack from "../ui/Goback";
 import Logo from "../ui/Logo";
 import useProgressStore from "@/app/zustand/store";

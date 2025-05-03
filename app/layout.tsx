@@ -18,7 +18,7 @@ const hind = localFont({
       style: "normal"
     },
     {
-      path: "./fonts/Hind-light.ttf",
+      path: "./fonts/Hind-Light.ttf",
       weight: "300",
       style: "normal"
     },

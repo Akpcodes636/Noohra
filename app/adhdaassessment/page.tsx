@@ -1,40 +1,26 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import AssessmentLayout from "../components/Layout/AssessmentLayout";
 import { adhdAssessmentQuestions } from "../components/utilis/data/mockAssessmentData";
 import useProgressStore from "../zustand/store";
-import ResultPage from "../result/page";
-// import ResultPage from "../components/ResultPage"; // 👈 We'll create this next
 
 interface Answers {
   [key: string]: string;
 }
 
 export default function ADHDAssessment() {
+  const router = useRouter();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const { setProgress, progress } = useProgressStore();
   const [answers, setAnswers] = useState<Answers>({});
   const [isCompleted, setIsCompleted] = useState(false);
-
+  
   const currentQuestion = adhdAssessmentQuestions[currentQuestionIndex];
-
-  const handleOptionClick = (optionValue: string): void => {
-    const newAnswers = {
-      ...answers,
-      [currentQuestion.id]: optionValue,
-    };
-    setAnswers(newAnswers);
-
-    if (currentQuestionIndex < adhdAssessmentQuestions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setProgress(progress + 1);
-    } else {
-      setIsCompleted(true);
-    }
-  };
-
-  const calculateScore = () => {
+  
+  // Use useCallback to memoize the calculateScore function
+  const calculateScore = useCallback(() => {
     let score = 0;
     adhdAssessmentQuestions.forEach((question) => {
       if (answers[question.id] === question.correctAnswer) {
@@ -42,12 +28,33 @@ export default function ADHDAssessment() {
       }
     });
     return score;
+  }, [answers]);
+  
+  const handleOptionClick = (optionValue: string): void => {
+    const newAnswers = {
+      ...answers,
+      [currentQuestion.id]: optionValue,
+    };
+    
+    setAnswers(newAnswers);
+    
+    if (currentQuestionIndex < adhdAssessmentQuestions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setProgress(progress + 1);
+    } else {
+      setIsCompleted(true);
+    }
   };
-
-  if (isCompleted) {
-    return <ResultPage score={calculateScore()} total={adhdAssessmentQuestions.length} />;
-  }
-
+  
+  // Use useEffect to navigate when assessment is completed
+  useEffect(() => {
+    if (isCompleted) {
+      const score = calculateScore();
+      const total = adhdAssessmentQuestions.length;
+      router.push(`/result?score=${score}&total=${total}`);
+    }
+  }, [isCompleted, router, calculateScore]);
+  
   return (
     <AssessmentLayout
       progress={progress}
@@ -70,7 +77,6 @@ export default function ADHDAssessment() {
             )}
           </div>
         </div>
-
         {/* Right Section - Options */}
         <div className="w-full bg-white">
           <div className="space-y-4">

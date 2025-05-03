@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 interface InputProps {
   name: string;
   label: string;
-  type?: string;
   placeholder?: string;
   css?: string;
   autoComplete?: string;
@@ -17,7 +16,6 @@ const InputField: React.FC<InputProps> = ({
   name,
   readonly,
   label,
-  type = "text",
   value,
   autoComplete,
 }) => {

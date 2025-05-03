@@ -1,4 +1,3 @@
-import { ChevronDown } from 'lucide-react';
 import { loginRoute, registerRoute } from '../Route';
 
 export const AboutDropdown = [

@@ -123,7 +123,7 @@ export default function TestModal({
               </div>
               <div>
                 <p className="text-[12px] text-[#7A5A0D]">
-                  If you're taking this assessment on behalf of someone else,
+                  If you&apos;re taking this assessment on behalf of someone else,
                   please use their information to answer the questions.
                 </p>
               </div>
