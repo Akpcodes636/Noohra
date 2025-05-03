@@ -1,8 +1,7 @@
 "use client";
-import { FC } from "react";
 import Link from "next/link";
 import AssessmentHeader from "../components/Assesment/AssessmentHeader";
-import { useRouter } from "next/navigation";
+
 // import AssessmentHeader from "../components/AssessmentHeader";
 
 export default function CognitiveAssessmentInfo() {

@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
 import { AboutDropdown } from "../utilis/contents/HomePage.Content";
 
 interface DropdownItem {

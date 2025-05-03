@@ -22,7 +22,7 @@ export default function Testpage() {
   };
 
   // Handle confirmation
-  const handleConfirm = (selection: string) => {
+  const handleConfirm = () => {
     // Add your confirmation logic here
     console.log("Test selection confirmed");
     closeLoginModal();
