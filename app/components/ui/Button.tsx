@@ -25,7 +25,7 @@ interface ButtonProps {
     css,
   }) =>{
     return (
-        <button onClick={fn} type={type} className={`flex h-14 items-center justify-center rounded-[4px] duration-150 font-semibold leading-[26px] text-[16px] transition-all  ${css}
+        <button onClick={fn} type={type} className={`flex cursor-pointer h-14 items-center justify-center rounded-[4px] duration-150 font-semibold leading-[26px] text-[16px] transition-all  ${css}
         ${
             style === "primary" &&
             "bg-[#000000] text-white"

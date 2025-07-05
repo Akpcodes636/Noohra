@@ -23,11 +23,9 @@ export default function Testpage() {
 
   // Handle confirmation
   const handleConfirm = () => {
-    // Add your confirmation logic here
     console.log("Test selection confirmed");
     closeLoginModal();
     setShowTestQuestions(true);
-    // You could navigate to the next page or perform other actions
   };
 
   return (
@@ -36,7 +34,7 @@ export default function Testpage() {
       <div className="container mx-auto">
         {/* Desktop View */}
         {!showTestQuestions && (
-          <div className="h-screen grid grid-cols-2 place-items-center">
+          <div className="h-screen  grid grid-cols-1 lg:grid-cols-2 place-items-center">
             <div className="w-[502px] h-full flex items-start justify-center flex-col">
               <div className="flex items-center justify-center gap-3">
                 <div className="h-0 w-[35.5px]">
@@ -47,11 +45,11 @@ export default function Testpage() {
                     height={500}
                   />
                 </div>
-                <p className="text-[#63605D] font-medium text-[16px]">
+                <p className="text-[#63605D] text-[12.44px] text-center font-medium lg:text-[16px]">
                   5-MINUTE TEST
                 </p>
               </div>
-              <h1 className="font-bold text-[32px] mb-[16px]">
+              <h1 className="font-bold text-[18px] lg:text-[32px] mb-[16px]">
                 Your Journey to Understanding ADHD and ASD Starts Here
               </h1>
               <p className="font-normal text-[20px] mb-[40px]">
