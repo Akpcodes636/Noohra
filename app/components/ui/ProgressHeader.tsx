@@ -1,7 +1,7 @@
 "use client";
 import GoBack from "../ui/Goback";
 import Logo from "../ui/Logo";
-import useProgressStore from "@/app/zustand/store";
+import useProgressStore from "../../store/progressbar";
 
 export default function ProgressHeader() {
   const { progress } = useProgressStore(); 
@@ -20,7 +20,7 @@ export default function ProgressHeader() {
         </div>
       </div>
       {/* Progress Bar */}
-      <div className="h-1 w-full bg-gray-200">
+      <div className="h-1 w-full bg-gray-200 -mt-2">
         <div
           className="h-1 bg-[#2EBAAC] transition-all duration-300"
           style={{ width: `${progress}%` }}

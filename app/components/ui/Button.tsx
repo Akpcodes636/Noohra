@@ -34,7 +34,7 @@ interface ButtonProps {
             "bg-[#000000] text-white"
         }${
             style === "tertiary" && 
-            "border-[1px] border-[#CFCECD] text-white-100"
+            "border-[1px] border-[#CFCECD]"
           }`
         }
           >

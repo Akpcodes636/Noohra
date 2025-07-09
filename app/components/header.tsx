@@ -71,25 +71,36 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation Menu */}
-      <div className={`absolute w-full bg-gray-50 shadow-lg transition-all duration-300 ${
-        mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-      }`}>
-        <nav className="px-4 py-4">
-          <ul className="flex flex-col space-y-4">
-            {NavLinks.map((link, index) => (
-              <li key={index} className="w-full">
-                <Link
-                  href={link.router}
-                  className="block py-2 text-[16px] text-[#0E1133] font-medium hover:text-[#2B4EFF]"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+    {/* Mobile Navigation Menu */}
+{mobileMenuOpen && (
+  <>
+    {/* Backdrop */}
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 z-40"
+      onClick={() => setMobileMenuOpen(false)}
+    ></div>
+
+    {/* Mobile Nav */}
+    <div className="absolute top-[10vh] left-0 w-full z-50 bg-black-300 shadow-lg transition-all duration-300">
+      <nav className="px-4 py-6">
+        <ul className="flex flex-col space-y-6">
+          {NavLinks.map((link, index) => (
+            <li key={index}>
+              <Link
+                href={link.router}
+                className="block text-lg font-medium text-white-400 hover:text-[#25958A] transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </>
+)}
+
     </header>
   );
 }

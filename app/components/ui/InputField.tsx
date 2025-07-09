@@ -9,6 +9,7 @@ interface InputProps {
   autoComplete?: string;
   value?: string;
   readonly?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputField: React.FC<InputProps> = ({
@@ -17,6 +18,7 @@ const InputField: React.FC<InputProps> = ({
   readonly,
   label,
   value,
+  onChange,
   autoComplete,
 }) => {
   return (
@@ -32,7 +34,7 @@ const InputField: React.FC<InputProps> = ({
         //   type={view && type === "password" ? "text" : type}
           placeholder={placeholder}
           value={value}
-       
+          onChange={onChange}
           autoComplete={autoComplete}
           className="input-class"
         />
