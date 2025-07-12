@@ -23,8 +23,21 @@ interface Question {
   imageUrl?: string;
 }
 
+interface RawOption {
+  text: string;
+  category: Category;
+  points: number;
+}
+
+interface RawQuestion {
+  id: number;
+  question: string;
+  options: Record<string, RawOption>; // e.g., { a: { ... }, b: { ... } }
+}
+
+
 export default function ADHDAssessment() {
-  const { userInfo, updateAnswer, updateScore } = useUserInfo();
+  const { updateAnswer, updateScore } = useUserInfo();
   // const [score, setScore] = useState<Record<Category, number>>({
   //   X: 0,
   //   Y: 0,
@@ -43,18 +56,17 @@ export default function ADHDAssessment() {
         const res = await fetch("/api/questions");
         const data = await res.json();
 
-        const formattedQuestions: Question[] = data.A.map((q: any) => ({
+        const formattedQuestions: Question[] = data.A.map((q: RawQuestion) => ({
           id: q.id.toString(),
           question: q.question,
-          options: Object.entries(q.options).map(
-            ([key, option]: [string, any]) => ({
-              value: key,
-              label: option.text,
-              category: option.category as Category,
-              points: option.points,
-            })
-          ),
+          options: Object.entries(q.options).map(([key, option]) => ({
+            value: key,
+            label: option.text,
+            category: option.category,
+            points: option.points,
+          })),
         }));
+        
 
         setQuestions(formattedQuestions);
         setLoading(false);

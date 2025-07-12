@@ -30,7 +30,7 @@ const handleSkip = () => {
                   Cognitive Test Notice!
                 </h2>
                 <p className="font-normal text-[14px] leading-[26px]">
-                  You're taking this assessment on behalf of someone else.
+                  You&apos;re taking this assessment on behalf of someone else.
                 </p>
               </div>
               <div
@@ -49,7 +49,7 @@ const handleSkip = () => {
                   the cognitive test can only be taken by the individual
                   themselves.{" "}
                 </span>{" "}
-                Since you're not the person being assessed, this portion will be
+                Since you&apos;re not the person being assessed, this portion will be
                 skipped.
               </p>
             </div>
