@@ -57,7 +57,7 @@ export default function DiagnosisPage() {
           {DiagnosedContent.map((p, i) => (
             <div key={i} className="mb-[16px]" onClick={() => handleClick(p.title)}>
               <div className="bg-[#EAF8F7] max-w-[530px] mx-auto h-[47px] space-x-[16px]">
-                <div className="py-[6px] px-[16px]">
+                <div className="py-[6px] px-[16px] cursor-pointer">
                   <p className="font-semibold text-[20px]">{p.title}</p>
                 </div>
               </div>

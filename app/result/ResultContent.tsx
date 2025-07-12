@@ -1,28 +1,59 @@
 "use client";
 
-import { useSearchParams } from 'next/navigation';
+import { useUserInfo } from "../context/UserInfoContext";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const ResultContent = () => {
-  // Get the score and total from search params
-  const searchParams = useSearchParams();
-  const score = parseInt(searchParams.get('score') || '0');
-  const total = parseInt(searchParams.get('total') || '10');
+  const { userInfo } = useUserInfo();
+  const { score, email } = userInfo;
 
-  // Determine placement based on score
-  const getPlacement = () => {
-    if (score <= 3) {
-      return "Foundational";
-    } else if (score <= 5) {
-      return "Grade 1";
-    } else if (score <= 7) {
-      return "Grade 2–3";
-    } else if (score <= 9) {
-      return "Grade 4–5";
-    } else {
-      return "Grade 6";
-    }
+  // Step 1: Determine dominant score category
+  const getPrimaryDiagnosis = () => {
+    const { X, Y, Z } = score;
+
+    if (X > Y && X > Z) return "ADHD traits are most prominent.";
+    if (Y > X && Y > Z) return "ASD traits are most prominent.";
+    if (Z > X && Z > Y) return "General behaviors (may overlap ADHD/ASD).";
+    return "Mixed or balanced traits across categories.";
   };
+
+  const diagnosisSummary = getPrimaryDiagnosis();
+
+  // Step 2: Send result to backend to email user (optional enhancement)
+  useEffect(() => {
+    const sendEmail = async () => {
+      try {
+        await fetch("/api/sendemail", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            subject: "Your Assessment Results",
+            body: `
+              Hello,
+
+              Here are your assessment results:
+
+              - ADHD-related Score (Category X): ${score.X}
+              - ASD-related Score (Category Y): ${score.Y}
+              - General/Mixed Score (Category Z): ${score.Z}
+
+              Summary: ${diagnosisSummary}
+
+              Thank you for taking the assessment.
+
+              Greene Nation Team
+            `
+          }),
+        });
+      } catch (err) {
+        console.error("Failed to send email:", err);
+      }
+    };
+
+    if (email) sendEmail();
+  }, [email, score, diagnosisSummary]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#EAF8F7] to-white py-12 px-4">
@@ -32,46 +63,18 @@ const ResultContent = () => {
             <h1 className="text-3xl font-bold text-[#2D7B7E] mb-2">
               Assessment Complete!
             </h1>
-            <p className="text-gray-600">
-              Thank you for completing the assessment
-            </p>
+            <p className="text-gray-600">Thank you for completing the assessment</p>
           </div>
-          {/* Score Display */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-[#F8FBFB] rounded-xl p-6 text-center">
-              <div className="mb-2">
-                <span className="text-4xl font-bold text-[#2D7B7E]">
-                  {score}
-                </span>
-                <span className="text-xl text-gray-500"> / {total}</span>
-              </div>
-              <p className="text-lg font-medium text-gray-700">
-                Correct Answers
-              </p>
-            </div>
+
+          {/* Score Breakdown */}
+          <div className="space-y-4 mb-6 text-sm md:text-base">
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>ADHD Score (X):</strong> {score.X}</p>
+            <p><strong>ASD Score (Y):</strong> {score.Y}</p>
+            <p><strong>General Score (Z):</strong> {score.Z}</p>
+            <p className="text-[#2D7B7E] font-semibold">{diagnosisSummary}</p>
           </div>
-          {/* Result Information */}
-          <div className="bg-[#F8FBFB] rounded-xl p-6 mb-8">
-            <h2 className="text-lg font-semibold text-[#2D7B7E] mb-4">
-              Results
-            </h2>
-            <div className="mb-4">
-              <p className="text-sm text-gray-500">Placement</p>
-              <p className="font-medium text-lg">{getPlacement()}</p>
-            </div>
-            <h3 className="text-md font-semibold text-[#2D7B7E] mt-4 mb-2">
-              Assessment Coverage
-            </h3>
-            <p className="text-gray-700 mb-2">
-              This assessment evaluated cognitive skills in four key areas:
-            </p>
-            <ul className="list-disc pl-5 text-gray-700">
-              <li>Pattern Recognition</li>
-              <li>Working Memory</li>
-              <li>Logical Reasoning</li>
-              <li>Focus & Attention</li>
-            </ul>
-          </div>
+
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Link href="/dashboard" className="flex-1">

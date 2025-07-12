@@ -1,35 +1,48 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AssessmentLayout from "../components/Layout/AssessmentLayout";
 import useProgressStore from "../store/progressbar";
 import { useUserInfo } from "../context/UserInfoContext";
 
+// Define allowed categories
+type Category = "X" | "Y" | "Z";
+
+interface Option {
+  value: string;
+  label: string;
+  category: Category;
+  points: number;
+}
+
 interface Question {
   id: string;
   question: string;
-  options: { value: string; label: string }[];
-  correctAnswer: string;
+  options: Option[];
   imageUrl?: string;
 }
 
 export default function ADHDAssessment() {
-  // ✅ Move useUserInfo inside the component
-  const { userInfo, updateAnswer } = useUserInfo();
-  
+  const { userInfo, updateAnswer, updateScore } = useUserInfo();
+  // const [score, setScore] = useState<Record<Category, number>>({
+  //   X: 0,
+  //   Y: 0,
+  //   Z: 0,
+  // });
+
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
-  const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const { setProgress, progress } = useProgressStore();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
         const res = await fetch("/api/questions");
         const data = await res.json();
-        setQuestions(data.questions);
-        // Flatten and normalize the response
+
         const formattedQuestions: Question[] = data.A.map((q: any) => ({
           id: q.id.toString(),
           question: q.question,
@@ -37,16 +50,17 @@ export default function ADHDAssessment() {
             ([key, option]: [string, any]) => ({
               value: key,
               label: option.text,
+              category: option.category as Category,
+              points: option.points,
             })
           ),
-          correctAnswer: "", // Leave empty or define if you have this
-          imageUrl: q.imageUrl || null,
         }));
 
         setQuestions(formattedQuestions);
-        // console.log(data)
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch questions:", error);
+        setLoading(false);
       }
     };
 
@@ -54,9 +68,14 @@ export default function ADHDAssessment() {
   }, []);
 
   const handleOptionClick = (selectedValue: string) => {
-    const currentQuestionId = questions[currentStep]?.id;
-    if (currentQuestionId) {
-      updateAnswer(Number(currentQuestionId), selectedValue);
+    const current = questions[currentStep];
+    const selectedOption = current.options.find(
+      (opt) => opt.value === selectedValue
+    );
+
+    if (selectedOption) {
+      updateScore(selectedOption.category, selectedOption.points);
+      updateAnswer(parseInt(current.id), selectedValue);
     }
 
     const nextStep = currentStep + 1;
@@ -70,8 +89,37 @@ export default function ADHDAssessment() {
 
   const currentQuestion = questions[currentStep];
 
-  console.log(currentQuestion);
+  // Skeleton Loader
+  if (loading) {
+    return (
+      <AssessmentLayout
+        progress={progress}
+        currentStep={currentStep}
+        totalSteps={10}
+      >
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-pulse">
+            <div className="space-y-4">
+              <div className="h-6 bg-gray-200 rounded w-3/4" />
+              <div className="h-[200px] w-full bg-gray-300 rounded-lg" />
+            </div>
+            <div className="space-y-4">
+              {Array(3)
+                .fill(0)
+                .map((_, idx) => (
+                  <div
+                    key={idx}
+                    className="h-[90px] bg-gray-200 rounded-[16px] w-full max-w-[530px]"
+                  />
+                ))}
+            </div>
+          </div>
+        </div>
+      </AssessmentLayout>
+    );
+  }
 
+  // Main UI
   return (
     <AssessmentLayout
       progress={progress}
@@ -80,7 +128,6 @@ export default function ADHDAssessment() {
     >
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-6">
-          {/* Left Section */}
           <div className="w-full flex flex-col items-center md:items-start">
             <div className="mb-4 text-[12px] md:text-[18px] font-semibold text-center md:text-left">
               {currentQuestion?.question}
@@ -96,7 +143,6 @@ export default function ADHDAssessment() {
             </div>
           </div>
 
-          {/* Right Section - Options */}
           <div className="w-full bg-white">
             <div className="space-y-4">
               {currentQuestion?.options.map((option) => (
