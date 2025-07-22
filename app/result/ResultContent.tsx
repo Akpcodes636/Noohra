@@ -3,6 +3,7 @@
 import { useUserInfo } from "../context/UserInfoContext";
 import Link from "next/link";
 import { useEffect } from "react";
+// import { ASSESSMENT_RESULT_TEMPLATE } from "../lib/emailTemplate";
 
 const ResultContent = () => {
   const { userInfo } = useUserInfo();
@@ -43,7 +44,7 @@ const ResultContent = () => {
 
               Thank you for taking the assessment.
 
-              Greene Nation Team
+              Niido Team
             `
           }),
         });

@@ -1,36 +1,39 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+// app/api/sendemail/route.ts
+import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { email, subject, body } = req.body;
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { email, subject, body: messageBody } = body;
 
-  // Prevent non-POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+  if (!email || !subject || !messageBody) {
+    return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
   }
 
-  // Configure the transporter
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: "smtp.zoho.com",
+    port: 465, // Or use 587 with secure: false
+    secure: true, // true for port 465, false for 587
     auth: {
-      user: process.env.EMAIL_USERNAME,       // your Gmail address
-      pass: process.env.EMAIL_APP_PASSWORD,   // your Gmail app password
+      user: "niido@terntribe.com", // your Zoho email
+      pass: "!speV5ls", // either your Zoho app password or login password
     },
   });
+  
 
   const mailOptions = {
-    from: `"Greene Nation" <${process.env.EMAIL_USERNAME}>`,
+    from: `"Niido" <${process.env.EMAIL_USERNAME}>`,
     to: email,
-    subject: subject,
-    text: body,
+    subject,
+    text: messageBody,
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent:', info.response);
-    res.status(200).json({ message: 'Email sent successfully' });
+    return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
   } catch (err) {
     console.error('Error sending email:', err);
-    res.status(500).json({ message: 'Failed to send email' });
+    return NextResponse.json({ message: 'Failed to send email' }, { status: 500 });
   }
 }
