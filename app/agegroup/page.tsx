@@ -24,7 +24,7 @@ export default function AgeGroup() {
             <div className="flex items-center justify-center gap-3">
               <div className="h-0 w-[25.5px]">
                 <Image
-                  src="/image/line.png"
+                  src="/image/Line.png"
                   alt="line through"
                   width={35.5}
                   height={2}
@@ -36,7 +36,7 @@ export default function AgeGroup() {
               </p>
               <div className="h-0 w-[25.5px]">
                 <Image
-                  src="/image/line.png"
+                  src="/image/Line.png"
                   alt="line through"
                   width={35.5}
                   height={2}
@@ -90,7 +90,7 @@ export default function AgeGroup() {
               <div className="flex items-center justify-start gap-3">
                 <div className="h-0 w-[35.5px]">
                   <Image
-                    src="/image/line.png"
+                    src="/image/Line.png"
                     alt="line through"
                     width={35.5}
                     height={2}

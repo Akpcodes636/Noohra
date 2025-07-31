@@ -21,7 +21,7 @@ const { setUserInfo } = useUserInfo();
         <div className="flex items-center justify-center">
           <div className="h-0 w-[25.5px]">
             <Image
-              src="/image/line.png"
+              src="/image/Line.png"
               alt="line through"
               width={500}
               height={500}
@@ -30,7 +30,7 @@ const { setUserInfo } = useUserInfo();
           <p className="text-[#63605D] font-medium text-[16px] mb-[3px]">4/4</p>
           <div className="h-0 w-[25.5px]">
             <Image
-              src="/image/line.png"
+              src="/image/Line.png"
               alt="line through"
               width={500}
               height={500}
@@ -76,7 +76,7 @@ const { setUserInfo } = useUserInfo();
               <div className="flex items-center justify-center ">
                 <div className="h-0 w-[35.5px]">
                   <Image
-                    src="/image/line.png"
+                    src="/image/Line.png"
                     alt="line through"
                     width={500}
                     height={500}

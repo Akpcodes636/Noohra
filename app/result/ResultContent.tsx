@@ -78,12 +78,12 @@ const ResultContent = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/dashboard" className="flex-1">
+            <Link href="/" className="flex-1">
               <button className="w-full bg-[#2D7B7E] hover:bg-[#246264] text-white font-medium py-3 px-6 rounded-xl transition-colors">
-                Return to Dashboard
+                Back Home
               </button>
             </Link>
-            <Link href="/assessments" className="flex-1">
+            <Link href="/" className="flex-1">
               <button className="w-full bg-[#EAF8F7] hover:bg-[#D0EEEC] text-[#2D7B7E] font-medium py-3 px-6 rounded-xl border border-[#2D7B7E] transition-colors">
                 Try Another Assessment
               </button>

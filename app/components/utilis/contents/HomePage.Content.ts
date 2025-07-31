@@ -12,15 +12,15 @@ export const NavLinks =[
     },
     {
         title:"Sponser A Child",
-        router:"/About",
+        router:"/",
     },
     {
         title:"Register",
-        router:registerRoute,
+        router:"/",
     },
     {
         title:"Login",
-        router:loginRoute,
+        router:"/",
     },
  
 ]
