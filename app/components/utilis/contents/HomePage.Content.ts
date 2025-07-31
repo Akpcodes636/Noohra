@@ -1,4 +1,4 @@
-import { loginRoute, registerRoute } from '../Route';
+
 
 export const AboutDropdown = [
     {title:"About Noohra",router:"/About"},
