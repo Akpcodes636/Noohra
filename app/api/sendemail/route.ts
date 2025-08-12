@@ -1,5 +1,3 @@
-// app/api/sendemail/route.ts
-import { assessmentEmailTemplate } from '@/app/components/utilis/emailTemplates';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
