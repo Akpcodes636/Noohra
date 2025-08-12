@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${hind.variable} ${robotoSlab.variable} ${nunito.variable} antialiased`}>
-      <Toaster richColors position="top-left" />
+      <Toaster richColors position="top-right" />
         <UserInfoProvider>
           {children}
         </UserInfoProvider>
