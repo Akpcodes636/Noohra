@@ -1,4 +1,5 @@
 // app/api/sendemail/route.ts
+import { assessmentEmailTemplate } from '@/app/components/utilis/emailTemplates';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
@@ -21,11 +22,13 @@ export async function POST(req: NextRequest) {
   });
   
 
+  // const htmlContent = assessmentEmailTemplate(scores);
   const mailOptions = {
     from: `"Niido" <${process.env.EMAIL_USERNAME}>`,
     to: email,
     subject,
-    text: messageBody,
+    html: `<h1>Hello!</h1>br<p>${messageBody}</p>`,
+    // html:assessmentEmailTemplate({ ADHD: 0, ASD: 0, General: 0 }), // Replace with actual scores if needed
   };
 
   try {

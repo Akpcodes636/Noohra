@@ -1,5 +1,7 @@
+import { assessmentEmailTemplate } from "@/app/components/utilis/emailTemplates";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+// import { assessmentEmailTemplate } from "@/utils/emailTemplates";
 
 const scoreMapping: Record<"a" | "b" | "c", "ADHD" | "ASD" | "General"> = {
   a: "ADHD",
@@ -16,25 +18,12 @@ export async function POST(req: Request) {
   try {
     const { answers, email }: AnswersPayload = await req.json();
 
-    const scores = {
-      ADHD: 0,
-      ASD: 0,
-      General: 0,
-    };
-
+    const scores = { ADHD: 0, ASD: 0, General: 0 };
     for (const questionId in answers) {
       const selected = answers[questionId];
       const category = scoreMapping[selected];
       if (category) scores[category]++;
     }
-
-    const resultText = `
-      Assessment Results:
-
-      - ADHD: ${scores.ADHD}
-      - ASD: ${scores.ASD}
-      - General: ${scores.General}
-    `;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -48,7 +37,7 @@ export async function POST(req: Request) {
       from: `"Assessment Bot" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Your Assessment Results",
-      text: resultText,
+      html: assessmentEmailTemplate(scores),
     });
 
     return NextResponse.json({ success: true, message: "Email sent successfully" });
