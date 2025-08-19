@@ -1,6 +1,5 @@
 import "./globals.css";
 import { Toaster } from 'sonner';
-// import { UserInfoProvider } from "@/context/UserInfoContext";
 import localFont from 'next/font/local';
 import { Roboto_Slab, Nunito } from 'next/font/google';
 import type { Metadata } from "next";
@@ -55,6 +54,11 @@ const hind = localFont({
 export const metadata: Metadata = {
   title: "Noohra-Ai learning app",
   description: "Your AI-powered learning app to support ADHD and ASD.",
+  icons: {
+    icon: "/favicon.ico",   // path relative to public/
+    shortcut: "/favicon.ico",
+    apple: "/favicon-32x32.png",  // optional: for iOS devices
+  },
 };
 
 
